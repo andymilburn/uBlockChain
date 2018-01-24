@@ -121,11 +121,12 @@ contract uNETToken01 is StandardToken {
 
     function uNETToken01(
         ) {
-        balances[msg.sender] = 100000;               // Give the creator all initial tokens (100000 for example)
-        totalSupply = 1000000;                        // Update total supply (100000 for example)
-        name = "uNET Token 01";                                   // Set the name for display purposes
+        balances[msg.sender] = 100000000000000000000000; // Give the creator all initial tokens -- we have 18 decimals places and 100k tokens, so 100,000 followed by 18 0's
+        totalSupply = 100000000000000000000000;  // Update total supply (100000 for example)
+        name = "uNET Token 01";                  // Set the name for display purposes
         decimals = 18;                            // Amount of decimals for display purposes
-        symbol = "UNET1";                               // Set the symbol for display purposes
+        unitsOneEthCanBuy = 1000;                // Set the price of your token for the ICO (CHANGE THIS)
+        symbol = "UNET1";                        // Set the symbol for display purposes
     }
 
     /* Approves and then calls the receiving contract */
