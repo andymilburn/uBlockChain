@@ -1,0 +1,14 @@
+ssh -i ethereumAWS-Pair1.pem ubuntu@ec2-13-230-161-24.ap-northeast-1.compute.amazonaws.com
+
+ssh -i Ethereum-keyPair2.pem ubuntu@ec2-18-217-55-228.us-east-2.compute.amazonaws.com
+
+eth 
+Then from the aws side:
+sudo su
+
+    1  apt-get update
+    2  apt-get install software-properties-common
+    3  add-apt-repository -y ppa:ethereum/ethereum
+    4  apt-get update
+    5  apt-get install -y ethereum
+

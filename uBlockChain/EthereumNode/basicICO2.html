@@ -1,0 +1,203 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="ICO smart contract example">
+    <script src="node_modules/ethers/dist/ethers.js"></script>
+
+    <title>uNET Test Coin ICO</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
+
+    <!-- Custom styles for this template -->
+    <style>
+      /* Space out content a bit */
+      body {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        color: white;
+        background-color: #095189;
+      }
+
+      /* Everything but the jumbotron gets side spacing for mobile first views */
+      .header,
+      .marketing,
+      .footer {
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+
+      /* Custom page header */
+      .header {
+        padding-bottom: 1rem;
+        border-bottom: .05rem solid #e5e5e5;
+        color: white;
+      }
+      /* Make the masthead heading the same height as the navigation */
+      .header h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 3rem;
+      }
+
+      /* Custom page footer */
+      .footer {
+        padding-top: 1.5rem;
+        color: #777;
+        border-top: .05rem solid #e5e5e5;
+      }
+
+      /* Customize container */
+      @media (min-width: 48em) {
+        .container {
+          max-width: 46rem;
+        }
+      }
+      .container-narrow > hr {
+        margin: 2rem 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        text-align: center;
+        border-bottom: .05rem solid #e5e5e5;
+        background-color: black;
+    }
+      .jumbotron .btn {
+        padding: .75rem 1.5rem;
+        font-size: 1.5rem;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 3rem 0;
+      }
+      .marketing p + h4 {
+        margin-top: 1.5rem;
+      }
+
+      /* Responsive: Portrait tablets and up */
+      @media screen and (min-width: 48em) {
+        /* Remove the padding we set earlier */
+        .header,
+        .marketing,
+        .footer {
+          padding-right: 0;
+          padding-left: 0;
+        }
+        /* Space out the masthead */
+        .header {
+          margin-bottom: 2rem;
+        }
+        /* Remove the bottom border on the jumbotron for visual effect */
+        .jumbotron {
+          border-bottom: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://unet.technology" target="_blank">Info</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="mailto:andy@unet.technology">Contact</a>
+            </li>
+          </ul>
+        </nav>
+        <h3 class="text">uNET</h3>
+      </div>
+
+
+      <div class="jumbotron">
+        <h1 class="display-5">uNET Test Coin ICO</h1>
+        <p class="lead"><strong>0xdfe2ee9d6242be4b7e19ec18e4d0d4c15a2af2af</strong></p>
+        <h1 class="display-5">Total Raised</h1>
+        <p class="lead"><strong id="amountRaised"></strong></p>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>Price</h4>
+          <p>1 ETH = 100,000 UNET8</p>
+
+          <h4>Total Supply</h4>
+          <p>1000</p>
+
+          <h4>First week bonus</h4>
+          <p>50%</p>
+        </div>
+
+        <div class="col-lg-6">
+          <h4>Start Date</h4>
+          <p>24th Jan 2018, 5:15 pm</p>
+
+          <h4>End Date</h4>
+          <p>29th Feb 2018, 7:20 pm</p>
+
+          <h4>Max Cap</h4>
+          <p>0.1 ETH</p>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; uNET 2018</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+    <script src="https://cdn.ethers.io/scripts/ethers-v2.0.min.js" type="text/javascript"></script>
+    <script>
+
+
+    var providers = ethers.providers;
+    var network = providers.networks.main;
+    // Etherscan API E3F95PKS2WHSWQINWR2MMK4V49R3PNAG3B
+    var provider = new providers.EtherscanProvider(network, 'E3F95PKS2WHSWQINWR2MMK4V49R3PNAG3B');
+
+    // dumb test
+    // Block Number
+    provider.getBlock(3346773).then(function(block) {
+        console.log(block);
+    });
+
+      var contractAbi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"fundsWallet","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"unitsOneEthCanBuy","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalEthInWei","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}];
+
+      var contract = new ethers.Contract("0xdfe2ee9d6242be4b7e19ec18e4d0d4c15a2af2af", contractAbi, provider);
+
+      console.log(contract);
+
+      var callPromise = contract.totalEthInWei();
+      // try totalEthInWei
+
+      callPromise.then(function(result) {
+          // The first entry of the return result (author)
+          console.log('Positional argument (0):' + result[0]);
+          document.getElementById('amountRaised').innerHTML = (result[0].toString(10)/1000000000000000000) + ' ETH';
+      });
+
+/*
+      var pricePromise = getPrice.getBasePrice('USD','ETH');
+      pricePromise.then(function(result) {
+          // The first entry of the return result (author)
+          console.log('pricePromise:' + result[0]);
+          document.getElementById('amountRaised').innerHTML = (result[0].toString(10)/1000000000000000000) + ' ETH';
+      });
+      */
+
+
+    </script>
+  </body>
+</html>
