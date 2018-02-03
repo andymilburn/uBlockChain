@@ -34,7 +34,6 @@
       .header {
         padding-bottom: 1rem;
         border-bottom: .05rem solid #e5e5e5;
-        color: white;
       }
       /* Make the masthead heading the same height as the navigation */
       .header h3 {
@@ -65,7 +64,7 @@
         text-align: center;
         border-bottom: .05rem solid #e5e5e5;
         background-color: black;
-    }
+      }
       .jumbotron .btn {
         padding: .75rem 1.5rem;
         font-size: 1.5rem;
@@ -101,7 +100,7 @@
   </head>
 
   <body>
-
+    <div class="container">
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills float-right">
@@ -119,12 +118,11 @@
         <h3 class="text">uNET</h3>
       </div>
 
-
-      <div class="jumbotron" width=500>
+      <div class="jumbotron">
         <h1 class="display-5">uNET Test Coin ICO</h1>
         <p class="lead"><strong>0xdfe2ee9d6242be4b7e19ec18e4d0d4c15a2af2af</strong></p>
         <h1 class="display-5">Total Raised</h1>
-        <p class="lead"><strong id="amountRaised"></strong></p>
+        <p class="lead" style="color:green;"><strong id="amountRaised"></strong></p>
       </div>
 
       <div class="row marketing">
@@ -158,6 +156,7 @@
     </div> <!-- /container -->
 
 
+
     <script src="https://cdn.ethers.io/scripts/ethers-v2.0.min.js" type="text/javascript"></script>
     <script>
 
@@ -179,25 +178,28 @@
 
       console.log(contract);
 
-      var callPromise = contract.totalEthInWei();
-      // try totalEthInWei
+      var totalRaisedInEth;
+      var totalRaisedInDollars;
 
-      callPromise.then(function(result) {
-          // The first entry of the return result (author)
-          console.log('Positional argument (0):' + result[0]);
-          document.getElementById('amountRaised').innerHTML = (result[0].toString(10)/1000000000000000000) + ' ETH';
-      });
+      var ethPromise = contract.totalEthInWei();
+      var pricePromise = provider.getEtherPrice();
 
-/*
-      var pricePromise = getPrice.getBasePrice('USD','ETH');
-      pricePromise.then(function(result) {
-          // The first entry of the return result (author)
-          console.log('pricePromise:' + result[0]);
-          document.getElementById('amountRaised').innerHTML = (result[0].toString(10)/1000000000000000000) + ' ETH';
-      });
-      */
+      var allPromise = Promise.all([
+        ethPromise,
+        pricePromise
+      ]);
 
+      allPromise.then(function(result) {
+        console.log('Positional argument (0):' + result[0]);
+        console.log('Positional argument (1):' + result[1]);
+        totalRaisedInEth = result[0] /1000000000000000000;
+        var ethPrice = result[1];
+        totalRaisedInDollars = ethPrice * totalRaisedInEth;
+        totalRaisedInDollars = Math.round(totalRaisedInDollars * 100) / 100;
+        console.log('totalRaisedInDollars:' + totalRaisedInDollars);
+        document.getElementById('amountRaised').innerHTML = totalRaisedInEth + ' ETH ' + '(' + totalRaisedInDollars + ' US$' + ')';
+    });
 
-    </script>
+      </script>
   </body>
 </html>
